@@ -6,7 +6,9 @@ export async function getAllData(): Promise<Data> {
     if (typeof window === 'undefined') {
       // Estamos en el servidor
       const base =
-        process.env.NEXT_PUBLIC_VERCEL_URL
+        process.env.VERCEL_URL
+          ? `https://${process.env.VERCEL_URL}`
+          : process.env.NEXT_PUBLIC_VERCEL_URL
           ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
           : 'http://localhost:3000';
       url = `${base}/data.json`;
