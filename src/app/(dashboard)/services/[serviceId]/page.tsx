@@ -1,4 +1,4 @@
-import { getServiceById } from '@/lib/sdk'
+import { getServiceById } from '@/lib/data-loader'
 import { Service } from '@/lib/types'
 import { ServiceDetailsCard } from '@/components/services/ServiceDetailsCard'
 import { VulnerabilitiesSection } from '@/components/vulnerabilities/VulnerabilitiesSection'
@@ -9,8 +9,9 @@ interface Props {
 }
 
 export default async function ServiceDetailPage({ params }: Props) {
-  const { serviceId } = params
+  const { serviceId } = await params
   const serviceIdNumber = parseInt(serviceId, 10)
+
   if (isNaN(serviceIdNumber) || serviceIdNumber <= 0) {
     notFound()
   }
@@ -18,7 +19,8 @@ export default async function ServiceDetailPage({ params }: Props) {
   let service: Service | null = null
   let error: string | null = null
   try {
-    service = await getServiceById(serviceIdNumber)
+    const result = await getServiceById(serviceIdNumber)
+    service = result ?? null
   } catch (err: unknown) {
     error =
       err instanceof Error ? err.message : 'Failed to load service details.'
@@ -35,6 +37,7 @@ export default async function ServiceDetailPage({ params }: Props) {
     )
   }
 
+  console.log('services ID page:', service)
   if (!service) {
     return (
       <div className='flex flex-col items-center justify-center h-64'>

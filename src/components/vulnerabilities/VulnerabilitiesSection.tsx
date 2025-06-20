@@ -21,6 +21,7 @@ interface Props {
 export function VulnerabilitiesSection({ service }: Props) {
   const [selectedSeverity, setSelectedSeverity] = useState<string>('all')
   const [searchTerm, setSearchTerm] = useState<string>('')
+  console.log('services: ', service)
 
   // Usar debounce para el término de búsqueda
   const debouncedSearchTerm = useDebounce(searchTerm, 300)
@@ -176,18 +177,6 @@ export function VulnerabilitiesSection({ service }: Props) {
           </Select>
         </div>
       </div>
-
-      {/* Sugerencias de búsqueda */}
-      {searchTerm.trim() === '' && service.vulnerabilities.length > 0 && (
-        <div className='mb-4 p-3 bg-gray-50 rounded-lg'>
-          <p className='text-sm text-gray-600 mb-2'>
-            <strong>Search tips:</strong> Try searching by vulnerability type
-            (e.g., &quot;SQL Injection&quot;), file names (e.g.,
-            &quot;.java&quot;), or OWASP references (e.g.,
-            &quot;MASVS-CODE&quot;).
-          </p>
-        </div>
-      )}
 
       {filteredVulnerabilities.length > 0 ? (
         <div className='grid gap-6 md:grid-cols-2 lg:grid-cols-3'>

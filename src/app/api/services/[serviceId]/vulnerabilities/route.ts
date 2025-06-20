@@ -7,7 +7,7 @@ export async function GET(
 ) {
   try {
     const serviceId = parseInt(params.serviceId);
-    const service = getServiceById(serviceId);
+    const service = await getServiceById(serviceId);
 
     if (!service) {
       return NextResponse.json(

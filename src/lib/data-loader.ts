@@ -1,32 +1,32 @@
-import fs from 'node:fs'
-import path from 'node:path'
 import { Data, Service, Vulnerability } from './types'
 
-const dataFilePath = path.join(process.cwd(), 'data.json');
-
-let cachedData: Data | null = null;
-
-export function getAllData(): Data {
-  if (cachedData) {
-    return cachedData;
-  }
-
+export async function getAllData(): Promise<Data> {
   try {
-    const jsonData = fs.readFileSync(dataFilePath, 'utf-8');
-    cachedData = JSON.parse(jsonData) as Data;
-    return cachedData;
+    let url = '/data.json';
+    if (typeof window === 'undefined') {
+      // Estamos en el servidor
+      const base =
+        process.env.NEXT_PUBLIC_VERCEL_URL
+          ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+          : 'http://localhost:3000';
+      url = `${base}/data.json`;
+    }
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('No se pudo obtener data.json');
+    const data = await res.json();
+    return data as Data;
   } catch (error) {
-    console.error('Failed to read or parse data.json', error)
+    console.error('Failed to fetch or parse data.json', error);
     return { services: [] };
   }
 }
 
-export function getServiceById(id: number): Service | undefined {
-  const { services } = getAllData()
+export async function getServiceById(id: number): Promise<Service | undefined> {
+  const { services } = await getAllData();
   return services.find(service => service.id === id);
 }
 
-export function getVulnerabilityById(serviceId: number, vulnerabilityId: string): Vulnerability | undefined {
-  const service = getServiceById(serviceId);
-  return service?.vulnerabilities?.find(vuln => vuln.vulnerabilityId === vulnerabilityId)
+export async function getVulnerabilityById(serviceId: number, vulnerabilityId: string): Promise<Vulnerability | undefined> {
+  const service = await getServiceById(serviceId);
+  return service?.vulnerabilities?.find(vuln => vuln.vulnerabilityId === vulnerabilityId);
 }

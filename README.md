@@ -31,6 +31,22 @@ Este proyecto es una aplicación Next.js para visualizar los resultados de anál
     -   Soporte para traducciones (inglés/español) con selector.
 -   **Links Compartibles:** Todas las vistas de detalle (servicio, vulnerabilidad) tienen URLs únicas y compartibles. Las evidencias tienen anclas para enlace directo.
 
+## Acceso a Datos: ¿Por qué hay dos funciones getServiceById?
+
+En el proyecto existen dos funciones llamadas `getServiceById`, ubicadas en archivos diferentes, y esto es intencional para separar claramente los contextos de acceso a datos:
+
+- **`src/lib/data-loader.ts`**
+  - Acceso directo a los datos locales leyendo `public/data.json`.
+  - Se usa principalmente en el backend, API Routes y Server Components, donde se requiere leer datos mockeados es decir los datos locales proporcionados en la prueb sin hacer una petición HTTP.
+  - Ejemplo de uso: lógica interna de endpoints en `/api` y pruebas locales.
+
+- **`src/lib/sdk/index.ts`**
+  - Acceso a los datos a través de la API HTTP (`/api/services/[id]`).
+  - Se usa en el frontend y Client Components, desacoplando el acceso a datos del backend y permitiendo consumir la API como si fuera remota.
+  - Ejemplo de uso: componentes React que consumen datos desde el navegador.
+
+Esta separación permite que el código sea más flexible, testeable y fácil de migrar a una API real en el futuro. Así, cada contexto (backend/server vs frontend/client) utiliza la función más adecuada para acceder a los datos.
+
 ## Cómo Empezar
 
 1.  **Clonar el repositorio:**
@@ -67,4 +83,4 @@ Este proyecto es una aplicación Next.js para visualizar los resultados de anál
 -   `npm run typecheck`: Ejecuta el chequeo de tipos de TypeScript.
 
 ## Deployment
-url de la aplicacion desplegada: 
+url de la aplicacion desplegada: https://just-mobile-security-dashboard.vercel.app/

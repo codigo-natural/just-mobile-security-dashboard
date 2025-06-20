@@ -14,9 +14,13 @@ interface Props {
 }
 
 export function ServiceDetailsCard({ service }: Props) {
-  const appName = service.scans[0]?.app?.name || service.summary?.name || 'N/A'
+  const firstScan =
+    Array.isArray(service.scans) && service.scans.length > 0
+      ? service.scans[0]
+      : undefined
+  const appName = firstScan?.app?.name || service.summary?.name || 'N/A'
   const appIcon =
-    service.scans[0]?.app?.icon?.url ||
+    firstScan?.app?.icon?.url ||
     service.summary?.icon ||
     '/placeholder-icon.png'
   return (
@@ -33,8 +37,7 @@ export function ServiceDetailsCard({ service }: Props) {
           <div>
             <CardTitle className='text-2xl'>{appName}</CardTitle>
             <CardDescription>
-              {service.scans[0]?.app?.description ||
-                service.summary?.description}
+              {firstScan?.app?.description || service.summary?.description}
             </CardDescription>
           </div>
         </div>
@@ -48,19 +51,21 @@ export function ServiceDetailsCard({ service }: Props) {
         </div>
         <div>
           <span className='font-semibold'>Service Type:</span>{' '}
-          {service.services.name}
+          {service.services?.name || 'N/A'}
         </div>
         <div>
           <span className='font-semibold'>Company:</span>{' '}
-          {service.assessment.company.name}
+          {service.assessment?.company?.name || 'N/A'}
         </div>
         <div>
           <span className='font-semibold'>Start Date:</span>{' '}
-          {format(parseISO(service.start_at), 'PPP p')}
+          {service.start_at
+            ? format(parseISO(service.start_at), 'PPP p')
+            : 'N/A'}
         </div>
         <div>
           <span className='font-semibold'>End Date:</span>{' '}
-          {format(parseISO(service.end_at), 'PPP p')}
+          {service.end_at ? format(parseISO(service.end_at), 'PPP p') : 'N/A'}
         </div>
         {service.summary && (
           <>
