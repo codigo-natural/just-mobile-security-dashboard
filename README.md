@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Just Mobile Security - Pentester Dashboard
 
-## Getting Started
+Este proyecto es una aplicación Next.js para visualizar los resultados de análisis de código estático de Just Mobile Security.
 
-First, run the development server:
+## Requerimientos Técnicos Cumplidos
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+-   **Framework:** Next.js (con App Router)
+-   **SDK Mínimo:** Se ha creado un SDK en `src/lib/sdk` que consume API Routes locales.
+-   **Endpoints REST Locales:** Implementados usando API Routes de Next.js en `src/app/api`.
+-   **UI/UX:** Se utiliza Tailwind CSS y shadcn/ui para un diseño claro y moderno.
+-   **Navegabilidad y URLs:** URLs claras y uso de parámetros dinámicos de Next.js.
+-   **Gráficos:** Se utiliza Recharts para visualizaciones estadísticas.
+-   **Calidad de Código:** TypeScript, ESLint, Prettier. El proyecto compila sin errores de tipo y pasa el linting.
+-   **Estándares Web:** Se utilizan bibliotecas estándar y se siguen las mejores prácticas.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Funcionalidades
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+-   **Dashboard Principal:**
+    -   Estadísticas generales sobre servicios y vulnerabilidades.
+    -   Gráficos de distribución.
+-   **Listado de Servicios:**
+    -   Vista de tarjeta para cada servicio con información relevante.
+    -   Navegación a la vista detallada del servicio.
+-   **Vista Detallada del Servicio:**
+    -   Resumen completo del servicio.
+    -   Listado de vulnerabilidades encontradas.
+    -   Filtrado de vulnerabilidades por severidad y búsqueda por texto.
+-   **Vista Detallada de Vulnerabilidad:**
+    -   Información completa: título, descripción, impacto, remediación, referencias OWASP.
+    -   Evidencias en formato de bloque de código con resaltado de sintaxis.
+    -   Soporte para traducciones (inglés/español) con selector.
+-   **Links Compartibles:** Todas las vistas de detalle (servicio, vulnerabilidad) tienen URLs únicas y compartibles. Las evidencias tienen anclas para enlace directo.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Cómo Empezar
 
-## Learn More
+1.  **Clonar el repositorio:**
+    ```bash
+    git clone https://github.com/codigo-natural/just-mobile-security-dashboard.git
+    cd just-mobile-security-dashboard
+    ```
 
-To learn more about Next.js, take a look at the following resources:
+2.  **Instalar dependencias:**
+    Asegúrate de tener Node.js (v20+) y npm instalados.
+    ```bash
+    npm install
+    ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3.  **Configurar variables de entorno:**
+    Crea un archivo `.env.local` en la raíz del proyecto:
+    ```bash
+    NEXT_PUBLIC_API_BASE_URL=http://localhost:3000/api
+    ```
+    En producción, actualiza esta variable con la URL de tu API.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+4.  **Ejecutar el servidor de desarrollo:**
+    ```bash
+    npm run dev
+    ```
+    La aplicación estará disponible en `http://localhost:3000`.
 
-## Deploy on Vercel
+## Scripts Disponibles
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+-   `npm run dev`: Inicia el servidor de desarrollo.
+-   `npm run build`: Construye la aplicación para producción.
+-   `npm run start`: Inicia un servidor de producción (después de `build`).
+-   `npm run lint`: Ejecuta ESLint.
+-   `npm run typecheck`: Ejecuta el chequeo de tipos de TypeScript.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deployment
+url de la aplicacion desplegada: 
