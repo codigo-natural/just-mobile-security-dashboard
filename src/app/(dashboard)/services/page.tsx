@@ -1,4 +1,4 @@
-import { getServices } from '@/lib/sdk'
+import { getAllData } from '@/lib/data-loader'
 import { ServiceCard } from '@/components/services/ServiceCard'
 import { Service } from '@/lib/types'
 
@@ -6,7 +6,7 @@ import { Service } from '@/lib/types'
 export const dynamic = 'force-dynamic'
 
 export default async function ServicesPage() {
-  const services: Service[] = await getServices()
+  const { services }: { services: Service[] } = await getAllData()
 
   if (!services || services.length === 0) {
     return <p>No sevices found.</p>
