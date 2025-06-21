@@ -1,10 +1,12 @@
-import { Service } from '@/lib/types'
-import { getServices } from '@/lib/sdk'
+import { getAllData } from '@/lib/data-loader'
 import { DashboardStats } from '@/components/dashboard/DashboardStats'
 import { DashboardCharts } from '@/components/dashboard/DashboardCharts'
 
+// Force dynamic rendering to avoid build-time API calls
+export const dynamic = 'force-dynamic'
+
 export default async function DashboardPage() {
-  const services: Service[] = await getServices()
+  const { services } = await getAllData()
   const totalServices = services.length
   const completedServices = services.filter(
     (s) => s.status === 'COMPLETED'

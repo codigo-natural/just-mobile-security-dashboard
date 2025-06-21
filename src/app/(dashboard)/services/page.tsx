@@ -2,6 +2,9 @@ import { getServices } from '@/lib/sdk'
 import { ServiceCard } from '@/components/services/ServiceCard'
 import { Service } from '@/lib/types'
 
+// Force dynamic rendering to avoid build-time API calls
+export const dynamic = 'force-dynamic'
+
 export default async function ServicesPage() {
   const services: Service[] = await getServices()
 

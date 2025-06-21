@@ -13,9 +13,7 @@ export const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const handleLogout = () => {
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem('isLoggedInJMS')
-    }
+    localStorage.removeItem('isLoggedInJMS')
     toast.info('Logged Out', {
       description: 'You have been succesfully logged out.',
     })

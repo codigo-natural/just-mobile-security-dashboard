@@ -4,6 +4,9 @@ import { ServiceDetailsCard } from '@/components/services/ServiceDetailsCard'
 import { VulnerabilitiesSection } from '@/components/vulnerabilities/VulnerabilitiesSection'
 import { notFound } from 'next/navigation'
 
+// Force dynamic rendering to avoid build-time API calls
+export const dynamic = 'force-dynamic'
+
 interface Props {
   params: { serviceId: string }
 }
